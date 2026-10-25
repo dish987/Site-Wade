@@ -1,16 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empresa Wade - Catálogo</title>
-    <link rel="stylesheet" href="frontend/css/style.css">
-    <link rel="stylesheet" href="frontend/css/catalogo.css">
+    <link rel="stylesheet" href="..//css/style.css">
+    <link rel="stylesheet" href="../css/catalogo.css">
+    <link rel="icon" href="../img/iconSite.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+    <header class="header">
+        <a href="#" class="logo-link">
+            <img src="../img/wadeCatalogo.png" alt="BeFarm Logo" id="imgH">
+        </a>
+
+        <!-- Botão Mobile -->
+        <button class="mobile-toggle" id="menuToggle" aria-label="Abrir menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Menu Principal -->
+        <nav id="direitoH">
+            <ul class="nav-links">
+                <li><a href="#">Início</a></li>
+                <li><a href="#">WadeBrasil</a></li>
+                <li><a href="#">BluseSafe</a></li>
+                <li><a href="../../index.html">BeFarm</a></li>
+                <li><a href="#" id="catalogo">Catálogo</a></li>
+            </ul>
+
+            <div class="header-buttons">
+                <a href="#" class="btn-header" id="botaoAPP">
+                    <img src="../img/logoAPP.png" alt="App Icon">
+                    <span>APP</span>
+                </a>
+                <a href="#" class="btn-header" id="botaoADMIN">
+                    <img src="../img/configAdmin.png" alt="Admin Icon">
+                    <span>DASHBOARD</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="headerMain">
+            <div class="esquerdaHeaderMain">
+                <p style="color: #595959; font-size: 10px;">UM CATÁLOGO · TRÊS ESPECIALISTAS</p>
+                <h1>Soluções que merecem</h1>
+                <h1 style="color: #595959;">mais espaço.</h1>
+                <p style="color: #595959;">Um ambiente para explorar produtos, comparar possibilidades e encontrar a solução certa entre as linhas Wade, BeFarm e BlueSafe.</p>
+                <p style="color: #595959;" id="tagsHead">Wade  BeFarm  BlueSafe</p>
+            </div>
+            <div class="direitaHeaderMain">
+                <img src="../img/imgCatalogo/celular.png" alt="" id="celularImg">
+            </div>
+        </section>
+        <hr>
+        <section class="mainCatalogo">
+            <section class="parte1">
+                <div class="titulos">
+                    <h1>Encontre uma solução.</h1>
+                    <h1 style="color: #595959;">Depois, aprofunde.</h1>
+                </div>
+                <div class="tagsButton">
+                    <button>Todos</button>
+                    <button>Wade</button>
+                    <button>BeFarm</button>
+                    <button>BlueSafe</button>
+                </div>
+            </section>
+
+            <section class="parte2">
+                <div class="search-container">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="O que você procura?">
+
+                    <button id="search-button">Buscar</button>
+                </div>
+            </section>
+            <section class="catalogo-container">
+                <div class="grid-produtos recolhido" id="gridProdutos">
+                    
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/400x200" alt="Produto Wade" class="card-image">
+                        <div class="card-body">
+                            <span class="card-tag tag-wade">Wade</span>
+                            <h2 class="card-title">Produto Wade 1</h2>
+                            <p class="card-description">Descrição curta e direta sobre como este produto ajuda o usuário.</p>
+                            <a href="#" class="card-btn btn-download-dinamico" target="_blank">Baixar o App</a>
+                        </div>
+                    </div>
+
+               <div class="container-botao">
+                    <button id="btnVerMais" class="btn-ver-mais">Ver mais produtos</button>
+                </div>
+            </section>
+
+            <section class="proximo-passo-section">
+                <div class="content-left">
+                    <span class="subtitle">PRÓXIMO PASSO</span>
+                    <h2 class="title">
+                        Encontrou algo<br>
+                        <span class="italic-text">interessante?</span>
+                    </h2>
+                </div>
+                
+                <div class="content-right">
+                    <p class="description">
+                        Escolha um produto, explore suas opções e entre em contato para receber especificações, versões e condições comerciais.
+                    </p>
+                    <a href="#" class="btn-equipa">
+                        <span class="btn-text">Falar com a equipe</span>
+                        <span class="btn-icon">
+                            <!-- Ícone de seta em SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+            </section>
+            <hr>
+        </section> <!-- Main Catalogo -->
+    </main>
+
+    <footer>
+        <div class="infoFooter">
+            <section class="imgEmpresas">
+                <img src="../img/beFarm.png" alt="BeFarm">
+                <img src="../img/wadeBrasil.png" alt="Wade Brasil">
+                <img src="../img/blueSafe.png" alt="Blue Safe">
+            </section>
+
+            <section class="caixasP mapaSite">
+                <h6 class="h6C">Mapa do Site</h6>
+                <a href="#">Início</a>
+                <a href="#">Quem Somos?</a>
+                <a href="#">Catálogo</a>
+            </section>
+
+            <section class="caixasP suporte">
+                <h6 class="h6C">Suporte</h6>
+                <a href="#">FAQ</a>
+            </section>
+
+            <section class="caixasP empresas">
+                <h6 class="h6C">Empresas</h6>
+                <a href="#">Wade Brasil</a>
+                <a href="#">BlueSafe</a>
+                <a href="#">BeFarm</a>
+            </section>
+
+            <section class="redesSociais">
+                <div class="sitesLogo">
+                    <a href="#"><img src="../img/instagram.png" alt="Instagram"></a>
+                    <a href="#"><img src="../img/facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="../img/twitter.png" alt="Twitter"></a>
+                </div>
+                <img src="../img/qrCode.png" alt="">
+            </section>
+        </div>
+
+        <div class="direitosFooter">
+            <p>© 2026 Wade. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../js/header.js"></script>
+    <script src="../js/catalogo.js"></script>
 </body>
 </html>
