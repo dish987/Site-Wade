@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Empresa Wade - Login</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="icon" href="../img/iconSite.png">
+  <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+
+  <div class="login-container">
+    <div class="login-card">
+      
+      <a href="../../index.html" class="back-btn">
+        <i data-lucide="arrow-left"></i>
+        <span>Voltar ao início</span>
+      </a>
+
+      <div class="card-header">
+        <h1 class="card-title">Acessar Conta</h1>
+        <p class="card-subtitle">Insira suas credenciais para continuar</p>
+      </div>
+
+      <form id="loginForm" onsubmit="handleSubmit(event)">
+        
+        <div class="form-group">
+          <label class="form-label" for="name">Nome</label>
+          <div class="input-wrapper">
+            <i data-lucide="user" class="input-icon"></i>
+            <input 
+              type="text" 
+              id="name" 
+              class="form-input" 
+              placeholder="Seu nome completo" 
+              required 
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">E-mail</label>
+          <div class="input-wrapper">
+            <i data-lucide="mail" class="input-icon"></i>
+            <input 
+              type="email" 
+              id="email" 
+              class="form-input" 
+              placeholder="seu@email.com" 
+              required 
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Senha</label>
+          <div class="input-wrapper">
+            <i data-lucide="lock" class="input-icon"></i>
+            <input 
+              type="password" 
+              id="password" 
+              class="form-input" 
+              placeholder="••••••••" 
+              style="padding-right: 42px;"
+              required 
+            />
+            <button 
+              type="button" 
+              class="toggle-password" 
+              onclick="togglePasswordVisibility()"
+              title="Mostrar/Ocultar senha"
+            >
+              <i data-lucide="eye" id="eyeIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span class="btn-text">Entrar</span>
+          <div class="spinner"></div>
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eyeIcon');
+
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.setAttribute('data-lucide', 'eye');
+      }
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>
