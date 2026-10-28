@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Administrativo - Wade</title>
+
+  <style>
+    body {
+      display: none;
+    }
+  </style>
+
+  <script>
+    (function() {
+      const token = localStorage.getItem('wade_token');
+
+      if (!token) {
+        window.location.replace('../../index.html');
+        return;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        document.body.style.display = 'block';
+      });
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+
+
+</body>
+</html>
