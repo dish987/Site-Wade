@@ -2,8 +2,9 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" href="../img/iconSite.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Administrativo - Wade</title>
+  <title>Empresa Wade - Dashboard</title>
 
   <style>
     body {
@@ -12,24 +13,178 @@
   </style>
 
   <script>
-    (function() {
-      const token = localStorage.getItem('wade_token');
+    (async function() {
+        const token = localStorage.getItem('wade_token');
 
-      if (!token) {
+        if (!token) {
         window.location.replace('../../index.html');
         return;
-      }
+        }
 
-      document.addEventListener('DOMContentLoaded', () => {
-        document.body.style.display = 'block';
-      });
+        try {
+        const response = await fetch('http://localhost:3000/verificar-token', {
+            method: 'GET',
+            headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            localStorage.removeItem('wade_token');
+            window.location.replace('../../index.html');
+            return;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.display = 'grid'; 
+        });
+
+        } catch (error) {
+        console.error("Erro de conexão com a API", error);
+        window.location.replace('../../index.html');
+        }
     })();
-  </script>
+    </script>
 
   <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
+    <aside class="sidebar panel">
+        <div class="logo-container">
+            <img src="../img/wadeCatalogo.png" alt="Logo da Empresa" class="sidebar-logo">
+        </div>
+        <h2 id="nome-usuario">Olá, </h2>
+        <div class="menu-options">
+            <button class="menu-btn active" onclick="mostrarPainel('add')">Adicionar Produto</button>
+            <button class="menu-btn" onclick="mostrarPainel('list')">Produtos Cadastrados</button>
+            <button class="menu-btn" onclick="mostrarPainel('admin')">Painel Perfis</button>
+            <button class="menu-btn" id="voltar-bnt" onclick="window.location.href='../../index.html'" style="margin-top: 30px; background-color: #FEE2E2; color: #DC2626; border-color: #FCA5A5;">
+                ⬅ Voltar ao Site
+            </button>
+        </div>
+    </aside>
 
+    <main class="content">
+        <button id="menu-toggle" onclick="toggleSidebar()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            Menu
+        </button>
+        <div id="panel-add" class="panel">
+            <h2>Adicionar Produto</h2>
+            <form id="uploadForm">
+                <div class="file-upload-wrapper">
+                    <label for="foto-produto" class="custom-file-upload">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <span id="nome-arquivo">Clique para enviar a imagem</span>
+                    </label>
+                    
+                    <input type="file" id="foto-produto" name="imagem" accept="image/*" onchange="mostrarNomeArquivo(this)">
+                </div>
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" name="titulo" required placeholder="Ex: Produto X">
+                </div>
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" name="descricao" placeholder="Descrição do produto" maxlength="255"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="empresa_id">Pertence a qual Empresa?</label>
+                    <select id="empresa_id" name="empresa_id" required>
+                        <option value="">Carregando empresas...</option>
+                    </select>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="exibir_no_carrossel" name="exibir_no_carrossel">
+                    <label for="exibir_no_carrossel" style="margin:0;">Exibir no Carrossel?</label>
+                </div>
+                <div class="form-group">
+                    <label for="pagina_carrossel_id">Em qual página do carrossel?</label>
+                    <select id="pagina_carrossel_id" name="pagina_carrossel_id" disabled>
+                        <option value="">Selecione primeiro a caixa acima</option>
+                    </select>
+                </div>
+                <button type="submit" id="btnSubmit" class="btn-submit">Salvar Produto</button>
+                <p id="statusMsg" style="text-align: center; font-size: 0.9rem; margin-top: 10px;"></p>
+            </form>
+        </div>
 
+        <div id="panel-list" class="panel" style="display: none;">
+            <h2>Produtos Cadastrados</h2>
+            <button id="btn-atualizar-Produtos" onclick="atualizarProdutos()">↻ Atualizar</button>
+            <div id="listaProdutos" class="products-grid">
+                <p class="loading">Carregando produtos...</p>
+            </div>
+        </div>
+        
+        <div id="painel-admin" class="panel" style="display: none;">
+            <h2>Admins Conectados</h2>
+            <form id="form_cadastrar_admin" class="admin-form">
+                <label for="admin_nome">Nome</label>
+                <input type="text" name="admin_nome" id="admin_nome" placeholder="Digite o nome" required>
+                
+                <label for="admin_email">Email</label>
+                <input type="email" name="admin_email" id="admin_email" placeholder="email@wadebrasil.com" required>
+                
+                <label for="admin_senha">Senha</label>
+                <input type="password" name="admin_senha" id="admin_senha" placeholder="••••••••" required>
+
+                <button type="submit" class="btn-submit" id="form-cadastrar-admin">Cadastrar Admin</button>
+            </form>
+
+            <button id="btn-atualizar-Admin" onclick="atualizarAdmins()">↻ Atualizar</button>
+            
+            <div id="lista_admins" class="admin-list">
+                <div class="admin-item admin-header">
+                <span class="col-posicao">#</span>
+                <span class="col-texto">Nome</span>
+                <span class="col-texto">Email</span>
+                <span class="col-acao"></span>
+            </div>
+
+                <div id="listaAdmins"></div>
+            </div>
+        </div>
+    </main>
+
+    <div id="modalEditar" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Produto</h3>
+                <button class="btn-close" onclick="fecharModal()">&times;</button>
+            </div>
+            <form id="formEditar">
+                <input type="hidden" id="edit_id">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="edit_titulo" required>
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea id="edit_descricao" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Empresa</label>
+                    <select id="edit_empresa_id" required></select>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="edit_exibir_carrossel">
+                    <label style="margin:0;">Exibir no Carrossel?</label>
+                </div>
+                <div class="form-group">
+                    <label>Página do Carrossel</label>
+                    <select id="edit_pagina_id" disabled></select>
+                </div>
+                <button type="submit" class="btn-submit">Salvar Alterações</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/dashboard.js"></script>
 </body>
 </html>

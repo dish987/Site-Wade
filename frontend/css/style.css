@@ -330,6 +330,14 @@ footer {
   display: inline-block;
 }
 
+@media (max-width: 1002px) {
+    .infoFooter{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 @media (max-width: 900px) {
     .infoFooter {
         flex-direction: column;
