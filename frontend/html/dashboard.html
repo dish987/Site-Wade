@@ -35,11 +35,6 @@
             window.location.replace('../../index.html');
             return;
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.body.style.display = 'grid'; 
-        });
-
         } catch (error) {
         console.error("Erro de conexão com a API", error);
         window.location.replace('../../index.html');
@@ -129,11 +124,11 @@
                 <input type="text" name="admin_nome" id="admin_nome" placeholder="Digite o nome" required>
                 
                 <label for="admin_email">Email</label>
-                <input type="email" name="admin_email" id="admin_email" placeholder="email@wadebrasil.com" required>
+                <input type="email" name="admin_email" id="admin_email" placeholder="sistema@gmail.com" required>
                 
                 <label for="admin_senha">Senha</label>
                 <input type="password" name="admin_senha" id="admin_senha" placeholder="••••••••" required>
-
+                
                 <button type="submit" class="btn-submit" id="form-cadastrar-admin">Cadastrar Admin</button>
             </form>
 

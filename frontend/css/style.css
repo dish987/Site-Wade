@@ -353,4 +353,9 @@ footer {
     .imgEmpresas {
         align-items: center;
     }
+
+    .copyright-link{
+        text-align: center;
+    }
 }
+

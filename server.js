@@ -5,10 +5,11 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import multer from 'multer';
 import db from './config/db.js';
-import { rateLimit } from 'express-rate-limit'
-import {verificarJWT} from './verificarJWT.js'
+import { rateLimit } from 'express-rate-limit';
+import {verificarJWT} from './exports.js'
 import { v2 as cloudinary } from 'cloudinary';
 
+ 
 dotenv.config();
 
 const app = express();
@@ -28,15 +29,23 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-const rateLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15mnt
-  limit: 10, // 10 req a cada 15mnt
+export const rateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  keyGenerator: (req) => {
+    if (req.admin && req.admin.id) {
+      return `admin_${req.admin.id}`;
+    }
+
+    const ip = req.headers['x-forwarded-for'] || req.ip || 'ip_desconhecido';
+    return ip.split(':').pop(); 
+  },
   handler: (_, res) => {
     res.status(429).json({ success: false, message: 'Muitas requisições. Tente novamente mais tarde.' });
   }
-})
+});
 
-app.get('/verificar-token', verificarJWT, (req, res) => {
+app.get('/verificar-token', verificarJWT, (_, res) => {
     res.status(200).json({ success: true, message: 'Token válido!' });
 });
 
@@ -178,6 +187,18 @@ app.delete('/api/excluirAdmin/:id', verificarJWT, async (req, res) => {
   const { id } = req.params;
 
   try {
+    const dbQntd = await db.query('SELECT COUNT(*) as total FROM admins');
+
+    const totalAdmins = parseInt(dbQntd.rows[0].total);
+
+    if(totalAdmins === 1) {
+      return res.status(409).json({success: false, message: 'Não é possivel excluir o último registro'});
+    }
+
+    if (req.admin.id == id){
+      return res.status(403).json({success: false, message: 'Não é possivel excluir seu próprio registro'})
+    } 
+
     const dbRes = await db.query('DELETE FROM admins WHERE id_admin = $1', [id]);
     
     if (dbRes.rowCount === 0) {
@@ -346,7 +367,7 @@ app.get('/getProdutosBeFarm', async (req, res) => {
     res.json(query.rows ,{success: true, message: 'Produto(s) encontrado(s)'});
   } catch(err){
     console.error('Erro', err);
-    res.status(500).json({error: 'Erro interno ao carregar os produtos!', err})
+    res.status(500).json({error: 'Erro interno ao carregr os produtos!', err})
   }
 }) 
 

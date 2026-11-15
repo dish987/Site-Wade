@@ -19,6 +19,7 @@
     "express-rate-limit": "^8.7.2",
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.5.0",
-    "pg": "^8.23.1"
+    "pg": "^8.23.1",
+    "redis": "^6.3.1"
   }
 }
