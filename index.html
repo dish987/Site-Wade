@@ -1,101 +1,609 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empresa Wade - Pagina Inicial</title>
-    <link rel="stylesheet" href="frontend/css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-</head>
-<body>
-     <header class="header">
-        <a href="#" class="logo-link">
-            <img src="frontend/img/wadeCatalogo.png" alt="BeFarm Logo" id="imgH">
-        </a>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function (d) {
+        d.classList.add("js");
+        if (
+          !matchMedia("(prefers-reduced-motion: reduce)").matches &&
+          "IntersectionObserver" in window
+        ) {
+          d.classList.add("anim");
+          setTimeout(function () {
+            if (!window.__animReady) d.classList.remove("anim");
+          }, 3000);
+        }
+      })(document.documentElement);
+    </script>
+    <title>Empresa Wade - Página Inicial</title>
 
-        <!-- Botão Mobile -->
-        <button class="mobile-toggle" id="menuToggle" aria-label="Abrir menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.cdnfonts.com/css/manrope" rel="stylesheet" />
+    <link rel="stylesheet" href="frontend/css/style.css" />
+    <link rel="stylesheet" href="frontend/css/Inicial.css" />
+    <link rel="icon" href="frontend/img/iconSite.png">
+  </head>
+  <body>
+    <header class="header">
+      <a href="#" class="logo-link">
+        <img src="frontend/img/wadeCatalogo.png" alt="Logo Wade" id="imgH" />
+      </a>
 
-        <!-- Menu Principal -->
-        <nav id="direitoH">
-            <ul class="nav-links">
-                <li><a href="#">Início</a></li>
-                <li><a href="#">WadeBrasil</a></li>
-                <li><a href="#">BluseSafe</a></li>
-                <li><a href="frontend/html/beFarm.html">BeFarm</a></li>
-                <li><a href="frontend/html/catalogo.html">Catálogo</a></li>
-            </ul>
+      <button class="mobile-toggle" id="menuToggle" aria-label="Abrir menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
 
-            <div class="header-buttons">
-                <a href="#" class="btn-header" id="botaoAPP">
-                    <img src="frontend/img/logoAPP.png" alt="App Icon">
-                    <span>APP</span>
-                </a>
-                <a href="#" class="btn-header" id="botaoADMIN">
-                    <img src="frontend/img/configAdmin.png" alt="Admin Icon">
-                    <span>DASHBOARD</span>
-                </a>
-            </div>
-        </nav>
+      <nav id="direitoH">
+        <ul class="nav-links">
+          <li><a href="#">Início</a></li>
+          <li><a href="#">WadeBrasil</a></li>
+          <li><a href="#">BlueSafe</a></li>
+          <li><a href="frontend/html/beFarm.html">BeFarm</a></li>
+          <li><a href="frontend/html/catalogo.html">Catálogo</a></li>
+        </ul>
+
+        <div class="header-buttons">
+          <a href="#" class="btn-header" id="botaoAPP">
+            <img src="frontend/img/logoAPP.png" alt="Ícone do aplicativo" />
+            <span>APP</span>
+          </a>
+          <a href="#" class="btn-header" id="botaoADMIN">
+            <img
+              src="frontend/img/configAdmin.png"
+              alt="Ícone administrativo"
+            />
+            <span>DASHBOARD</span>
+          </a>
+        </div>
+      </nav>
     </header>
 
     <main>
+      <div id="body">
+        <img src="frontend/img/WadeInitial.png" alt="Wade" id="IMG_Inicio" />
+
+        <section id="Inicio">
+          <div id="InitTxt_left">
+            <p id="Inovate">
+              Inovação que <span class="highlight-text">transforma</span> o
+              futuro
+            </p>
+            <p id="sinotavate">
+              Conectamos tecnologia, produtos e oportunidades para construir uma
+              nova forma de fazer negócios.
+            </p>
+            <a id="buttonInovate" href="#historia">Conheça nossa história</a>
+          </div>
+
+          <div id="InitTxt_right">
+            <div class="hero-art">
+              <span class="ripple ripple--1" aria-hidden="true"></span>
+              <span class="ripple ripple--2" aria-hidden="true"></span>
+              <span class="ripple ripple--3" aria-hidden="true"></span>
+              <svg
+                class="hero-waves"
+                viewBox="0 0 572 327"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  class="wave wave--black"
+                  data-cor="black"
+                  data-parte="1"
+                  d="M123 252 C120 170 138 108 172 105 C196 103 203 128 203 140"
+                />
+                <path
+                  class="wave wave--purple"
+                  data-cor="purple"
+                  data-parte="1"
+                  d="M86 242 C88 160 108 100 148 66 C186 36 230 44 230 110"
+                />
+                <path
+                  class="wave wave--teal"
+                  data-cor="teal"
+                  data-parte="1"
+                  d="M24 212 C24 120 55 60 120 28 C175 2 246 8 248 112"
+                />
+                <path
+                  class="wave wave--black"
+                  data-cor="black"
+                  data-parte="2"
+                  d="M258 235 C285 315 385 345 455 298 C505 262 518 205 517 166"
+                />
+                <path
+                  class="wave wave--purple"
+                  data-cor="purple"
+                  data-parte="2"
+                  d="M282 230 C318 282 410 292 462 248 C497 215 503 150 502 105"
+                />
+                <path
+                  class="wave wave--teal"
+                  data-cor="teal"
+                  data-parte="2"
+                  d="M300 225 C335 268 405 272 452 232 C490 198 497 150 497 108"
+                />
+              </svg>
+              <img
+                src="frontend/img/img_inicial_2.png"
+                alt="Ilustração da Wade"
+                id="InitIMG_right"
+              />
+            </div>
+          </div>
+        </section>
+
+        <div class="wave-divider" aria-hidden="true">
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="xMidYMax slice" focusable="false">
+            <g class="wv" style="--p:720;--t:26s"><path fill="#ADE1E0" fill-opacity="0.95" d="M0,46 q180,-52 360,0 t360,0 t360,0 t360,0 t360,0 t360,0 V120 H0 Z"/></g>
+            <g class="wv wv--rev" style="--p:560;--t:19s"><path fill="#44BFBC" fill-opacity="0.85" d="M0,62 q140,-44 280,0 t280,0 t280,0 t280,0 t280,0 t280,0 t280,0 t280,0 V120 H0 Z"/></g>
+            <g class="wv" style="--p:440;--t:14s"><path fill="#8A74C4" fill-opacity="0.95" d="M0,78 q110,-36 220,0 t220,0 t220,0 t220,0 t220,0 t220,0 t220,0 t220,0 t220,0 V120 H0 Z"/></g>
+            <g class="wv wv--rev" style="--p:360;--t:10s"><path fill="#5B4099" fill-opacity="1" d="M0,94 q90,-28 180,0 t180,0 t180,0 t180,0 t180,0 t180,0 t180,0 t180,0 t180,0 t180,0 V120 H0 Z"/></g>
+          </svg>
+        </div>
+
+        <section id="SecPoints">
+          <div class="divEsquerda">
+            <p id="TitlePoints">
+              Uma empresa construída a partir de uma visão de futuro.
+            </p>
+            <p id="SubTitlePoints">
+              A WADE foi criada para modernizar a forma como as pessoas se
+              relacionam com produtos, negócios e oportunidades.
+            </p>
+            <img
+              src="frontend/img/Hope.png"
+              alt="Pontos"
+              id="imgPoints"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="points-list">
+            <div class="divFlex borda">
+              <p class="grid-item">Tecnologia e negócios</p>
+              <p class="grid-text">
+                A tecnologia é um dos pilares centrais da empresa desde o
+                início.
+              </p>
+            </div>
+            <div class="divFlex borda">
+              <p class="grid-item">Produtos</p>
+              <p class="grid-text">
+                Desenvolvimento e comercialização de produtos naturais, com foco
+                em qualidade.
+              </p>
+            </div>
+            <div class="divFlex borda">
+              <p class="grid-item">Pessoas</p>
+              <p class="grid-text">
+                Relacionamentos duradouros com clientes e parceiros.
+              </p>
+            </div>
+            <div class="divFlex borda">
+              <p class="grid-item">Oportunidades</p>
+              <p class="grid-text">
+                Geração de renda e crescimento que contribuem para a realização
+                de sonhos.
+              </p>
+            </div>
+            <div class="divFlex">
+              <p class="grid-item">Inovação e sustentabilidade</p>
+              <p class="grid-text">
+                Um modelo empresarial mais moderno, transparente e conectado ao
+                futuro.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="Squares_Container" aria-label="Missão, visão e valores">
+          <article class="SQ">
+            <h3>MISSÃO</h3>
+            <p>
+              Desenvolver e oferecer produtos de alta qualidade, com tecnologia
+              e responsabilidade, criando um ecossistema onde pessoas possam
+              gerar renda, crescer e evoluir através de conexões reais e
+              oportunidades acessíveis.
+            </p>
+          </article>
+          <article class="SQ">
+            <h3>VISÃO</h3>
+            <p>
+              Ser o maior ecossistema de comercialização inteligente do Brasil.
+            </p>
+          </article>
+          <article class="SQ">
+            <h3>VALORES</h3>
+            <p>
+              Ser referência nacional na integração entre produtos, tecnologia e
+              geração de renda, construindo uma rede sólida de pessoas e
+              empresas.
+            </p>
+          </article>
+        </section>
+
+        <section class="Timeline" id="historia">
+          <h2 class="Title_Timeline">Evolução da WADE</h2>
+          <div class="Sub_Timeline">
+            <hr class="Timeline_Line" aria-hidden="true" />
+            <div class="Marcos">
+              <article class="MM">
+                <time class="Marco_Year" datetime="2018">2018</time>
+                <p>
+                  Durante a graduação em Direito, o fundador aprofunda estudos
+                  sobre sustentabilidade, inovação e economia, e questiona os
+                  modelos empresariais tradicionais.
+                </p>
+              </article>
+              <article class="MM">
+                <time class="Marco_Year" datetime="2019">2019</time>
+                <p>
+                  Após um período de planejamento estratégico, nasce o projeto
+                  Wade Brasil, ao final do ano.
+                </p>
+              </article>
+              <article class="MM">
+                <time class="Marco_Year" datetime="2025">2025</time>
+                <p>
+                  Surgem as marcas BeFarm e BlueSafe, e a WADE consolida a
+                  aquisição integral de seu aplicativo próprio.
+                </p>
+              </article>
+              <article class="MM">
+                <time class="Marco_Year" datetime="2026">2026</time>
+                <p>
+                  Início da parceria estratégica com o Biopark, ecossistema de
+                  inovação e pesquisa.
+                </p>
+              </article>
+            </div>
+            <div class="Timeline_buttonbox">
+              <a class="Timeline_button" href="#">Explore nossa trajetória</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="Marcas" aria-labelledby="marcas-titulo">
+  <h2 class="Marcas_Title" id="marcas-titulo">Marcas</h2>
+
+  <div class="carrossel-container" role="group" aria-roledescription="carrossel" aria-label="Marcas do ecossistema WADE">
+    <div class="carrossel-track" id="track">
+
+      <div class="carrossel-slide is-active">
+        <img
+          class="produto-imagem"
+          src="frontend/img/Beefarm_banner (1).png"
+          alt="Banner da BeFarm"
+          loading="lazy"
+        />
+        <div class="produto-info">
+          <h2 class="produto-titulo">Wade Brasil</h2>
+          <p class="produto-descricao">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus modi quasi vero fugiat, repellendus pariatur similique reprehenderit nisi nemo officia, ad sapiente necessitatibus rerum natus tenetur. Iste illo facere assumenda!
+          </p>
+          <a href="#" class="produto-btn" aria-label="Acessar página da BeFarm">Acessar página</a>
+        </div>
+      </div>
+      
+      <div class="carrossel-slide is-active">
+        <img
+          class="produto-imagem"
+          src="frontend/img/Beefarm_banner (1).png"
+          alt="Banner da BeFarm"
+          loading="lazy"
+        />
+        <div class="produto-info">
+          <h2 class="produto-titulo">BeFarm</h2>
+          <p class="produto-descricao">
+            Marca do ecossistema WADE, criada em 2025. Conheça os produtos
+            e as novidades da BeFarm.
+          </p>
+          <a href="frontend/html/beFarm.html" class="produto-btn" aria-label="Acessar página da BeFarm">Acessar página</a>
+        </div>
+      </div>
+
+      <div class="carrossel-slide">
+        <img
+          class="produto-imagem"
+          src="frontend/img/Beefarm_banner (1).png"
+          alt="Banner da BlueSafe"
+          loading="lazy"
+        />
+        <div class="produto-info">
+          <h2 class="produto-titulo">BlueSafe</h2>
+          <p class="produto-descricao">
+            Marca do ecossistema WADE, criada em 2025.
+          </p>
+          <a href="#" class="produto-btn" aria-label="Acessar página da BlueSafe">Acessar página</a>
+        </div>
+      </div>
+      
+    </div>
+    <button type="button" class="carrossel-btn prev-btn" id="prevBtn" aria-label="Slide anterior">
+      &#10094;
+    </button>
+    <button type="button" class="carrossel-btn next-btn" id="nextBtn" aria-label="Próximo slide">
+      &#10095;
+    </button>
+
+    <div class="carrossel-indicador" id="indicador"></div>
+  </div>
+</section>
+        <section class="Imagem_app">
+          <div class="App_Esquerda">
+            <img
+              src="frontend/img/cell.png"
+              class="imagem_cell"
+              alt="Aplicativo WADE em um celular"
+              loading="lazy"
+            />
+            <div class="container_qrcode">
+              <img
+                src="frontend/img/qrCode.png"
+                class="qr-code"
+                alt="QR Code para baixar o aplicativo"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div class="App_Direita">
+            <h2 class="App_Text">Conheça nosso app!</h2>
+                        <p class="App_Subtext">
+              Escaneie o QR e descubra o
+              <span class="highlight-text">ecossistema WADE</span>!
+            </p>
+
+          </div>
+        </section>
+
+        <section class="FAQ" id="faq">
+          <h2 class="FAQ_Title">Perguntas frequentes</h2>
+
+          <div class="FAQ_QUESTIONS">
+              <div class="faq-item">
+                <h3>
+                  <button
+                    type="button"
+                    class="faq-question"
+                    id="faq-btn-1"
+                    aria-expanded="false"
+                    aria-controls="faq-panel-1"
+                  >
+                    <span>O que é a WADE?</span>
+                    <img
+                      src="frontend/img/+.png"
+                      class="faq-icon"
+                      alt=""
+                      loading="lazy"
+                    />
+                  </button>
+                </h3>
+                <div class="faq-panel" id="faq-panel-1" role="region" aria-labelledby="faq-btn-1">
+                  <div>
+                    <p>A WADE foi criada para modernizar a forma como as pessoas se relacionam com produtos, negócios e oportunidades, conectando tecnologia, produtos e pessoas.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item">
+                <h3>
+                  <button
+                    type="button"
+                    class="faq-question"
+                    id="faq-btn-2"
+                    aria-expanded="false"
+                    aria-controls="faq-panel-2"
+                  >
+                    <span>Qual é o propósito da WADE?</span>
+                    <img
+                      src="frontend/img/+.png"
+                      class="faq-icon"
+                      alt=""
+                      loading="lazy"
+                    />
+                  </button>
+                </h3>
+                <div class="faq-panel" id="faq-panel-2" role="region" aria-labelledby="faq-btn-2">
+                  <div>
+                    <p>Desenvolver e oferecer produtos de alta qualidade, com tecnologia e responsabilidade, criando um ecossistema onde pessoas possam gerar renda, crescer e evoluir através de conexões reais e oportunidades acessíveis.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item">
+                <h3>
+                  <button
+                    type="button"
+                    class="faq-question"
+                    id="faq-btn-3"
+                    aria-expanded="false"
+                    aria-controls="faq-panel-3"
+                  >
+                    <span>Quais marcas fazem parte do seu ecossistema?</span>
+                    <img
+                      src="frontend/img/+.png"
+                      class="faq-icon"
+                      alt=""
+                      loading="lazy"
+                    />
+                  </button>
+                </h3>
+                <div class="faq-panel" id="faq-panel-3" role="region" aria-labelledby="faq-btn-3">
+                  <div>
+                    <p>O ecossistema reúne a Wade Brasil, a BeFarm e a BlueSafe.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item">
+                <h3>
+                  <button
+                    type="button"
+                    class="faq-question"
+                    id="faq-btn-4"
+                    aria-expanded="false"
+                    aria-controls="faq-panel-4"
+                  >
+                    <span>O que é a BeFarm?</span>
+                    <img
+                      src="frontend/img/+.png"
+                      class="faq-icon"
+                      alt=""
+                      loading="lazy"
+                    />
+                  </button>
+                </h3>
+                <div class="faq-panel" id="faq-panel-4" role="region" aria-labelledby="faq-btn-4">
+                  <div>
+                    <p>Marca do ecossistema WADE, criada em 2025. Conheça mais na <a href="frontend/html/beFarm.html">página da BeFarm</a>.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item">
+                <h3>
+                  <button
+                    type="button"
+                    class="faq-question"
+                    id="faq-btn-5"
+                    aria-expanded="false"
+                    aria-controls="faq-panel-5"
+                  >
+                    <span>O que é a BlueSafe?</span>
+                    <img
+                      src="frontend/img/+.png"
+                      class="faq-icon"
+                      alt=""
+                      loading="lazy"
+                    />
+                  </button>
+                </h3>
+                <div class="faq-panel" id="faq-panel-5" role="region" aria-labelledby="faq-btn-5">
+                  <div>
+                    <p>Marca do ecossistema WADE, criada em 2025.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item">
+                <h3>
+                  <button
+                    type="button"
+                    class="faq-question"
+                    id="faq-btn-6"
+                    aria-expanded="false"
+                    aria-controls="faq-panel-6"
+                  >
+                    <span>Como a tecnologia faz parte da operação?</span>
+                    <img
+                      src="frontend/img/+.png"
+                      class="faq-icon"
+                      alt=""
+                      loading="lazy"
+                    />
+                  </button>
+                </h3>
+                <div class="faq-panel" id="faq-panel-6" role="region" aria-labelledby="faq-btn-6">
+                  <div>
+                    <p>A tecnologia é um dos pilares centrais da empresa desde o início. Em 2025, a WADE consolidou a aquisição integral de seu aplicativo próprio.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item">
+                <h3>
+                  <button
+                    type="button"
+                    class="faq-question"
+                    id="faq-btn-7"
+                    aria-expanded="false"
+                    aria-controls="faq-panel-7"
+                  >
+                    <span>Onde posso conhecer a história completa?</span>
+                    <img
+                      src="frontend/img/+.png"
+                      class="faq-icon"
+                      alt=""
+                      loading="lazy"
+                    />
+                  </button>
+                </h3>
+                <div class="faq-panel" id="faq-panel-7" role="region" aria-labelledby="faq-btn-7">
+                  <div>
+                    <p>Na linha do tempo desta página: <a href="#historia">veja a evolução da WADE</a>.</p>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </section>
+      </div>
     </main>
 
-    <!-- Rodapé -->
-    <footer  style="background-color: #5B4099;">
-        <div class="infoFooter"">
-            <section class="imgEmpresas">
-                <img src="frontend/img/beFarm.png" alt="BeFarm">
-                <img src="frontend/img/wadeBrasil.png" alt="Wade Brasil">
-                <img src="frontend/img/blueSafe.png" alt="Blue Safe">
-            </section>
+    <footer class="site-footer">
+      <div class="infoFooter">
+        <section class="imgEmpresas" aria-label="Empresas do grupo">
+          <img src="frontend/img/beFarm.png" alt="BeFarm" loading="lazy" />
+          <img
+            src="frontend/img/wadeBrasil.png"
+            alt="Wade Brasil"
+            loading="lazy"
+          />
+          <img src="frontend/img/blueSafe.png" alt="BlueSafe" loading="lazy" />
+        </section>
 
-            <section class="caixasP mapaSite">
-                <h6 class="h6C">Mapa do Site</h6>
-                <a href="#">Início</a>
-                <a href="#">Quem Somos?</a>
-                <a href="#">Catálogo</a>
-            </section>
+        <section class="caixasP mapaSite">
+          <h6 class="h6C">Mapa do Site</h6>
+          <a href="#">Início</a>
+          <a href="#">Quem Somos?</a>
+          <a href="#">Catálogo</a>
+        </section>
 
-            <section class="caixasP suporte">
-                <h6 class="h6C">Suporte</h6>
-                <a href="#">FAQ</a>
-            </section>
+        <section class="caixasP suporte">
+          <h6 class="h6C">Suporte</h6>
+          <a href="#faq">FAQ</a>
+        </section>
 
-            <section class="caixasP empresas">
-                <h6 class="h6C">Empresas</h6>
-                <a href="#">Wade Brasil</a>
-                <a href="#">BlueSafe</a>
-                <a href="#">BeFarm</a>
-            </section>
+        <section class="caixasP empresas">
+          <h6 class="h6C">Empresas</h6>
+          <a href="#">Wade Brasil</a>
+          <a href="#">BlueSafe</a>
+          <a href="frontend/html/beFarm.html">BeFarm</a>
+        </section>
 
-            <section class="redesSociais">
-                <div class="sitesLogo">
-                    <a href="#"><img src="frontend/img/instagram.png" alt="Instagram"></a>
-                    <a href="#"><img src="frontend/img/facebook.png" alt="Facebook"></a>
-                    <a href="#"><img src="frontend/img/twitter.png" alt="Twitter"></a>
-                </div>
-                <img src="frontend/img/qrCode.png" alt="">
-            </section>
-        </div>
+        <section class="redesSociais">
+          <div class="sitesLogo">
+            <a href="#"
+              ><img
+                src="frontend/img/instagram.png"
+                alt="Instagram"
+                loading="lazy"
+            /></a>
+            <a href="#"
+              ><img
+                src="frontend/img/facebook.png"
+                alt="Facebook"
+                loading="lazy"
+            /></a>
+            <a href="#"
+              ><img src="frontend/img/twitter.png" alt="Twitter" loading="lazy"
+            /></a>
+          </div>
+          <img src="frontend/img/qrCode.png" alt="QR Code" loading="lazy" />
+        </section>
+      </div>
 
-        <div class="direitosFooter">
-            <p>
-                <a href="frontend/html/login.html" class="copyright-link" title="Acessar Área de Login">
-                © 2026 Sua Empresa. Todos os direitos reservados.
-                </a>
-            </p>
-        </div>
+      <div class="direitosFooter">
+        <p>
+          <a href="frontend/html/login.html" class="copyright-link"> © 2026 Sua Empresa. Todos os direitos reservados. </a>
+        </p>
+      </div>
     </footer>
 
-    <script src="frontend/js/header.js"></script>
-    <script src="frontend/js/autenticacaoIndex.js"></script>
-</body>
+    <script src="frontend/js/header.js" defer></script>
+    <script src="frontend/js/autenticacaoIndex.js" defer></script>
+    <script src="frontend/js/carrosselindex.js" defer></script>
+    <script src="frontend/js/inicial.js" defer></script>
+  </body>
 </html>

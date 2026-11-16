@@ -43,6 +43,7 @@ function iniciarCarrossel() {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const indicatorsContainer = document.getElementById('indicador'); 
+    const container = document.querySelector('.carrossel-container'); // Pegamos o container aqui em cima
 
     if (!track || slides.length === 0) return;
 
@@ -98,20 +99,42 @@ function iniciarCarrossel() {
         };
     }
 
+    // NOVA LÓGICA: Clique nas laterais do carrossel
+    if (container) {
+        container.addEventListener('click', (e) => {
+            // Se clicou em um botão (seta) ou bolinha, não faz nada (deixa a função deles rodar)
+            if (e.target.closest('button') || e.target.classList.contains('indicador') || e.target.closest('.carrossel-btn')) {
+                return;
+            }
+
+            const rect = container.getBoundingClientRect();
+            
+            const clickX = e.clientX - rect.left;
+            
+            const containerWidth = rect.width;
+
+            if (clickX < containerWidth / 2) {
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            } else {
+                currentIndex = (currentIndex + 1) % totalSlides;
+            }
+            updateCarousel();
+        });
+    }
+
     let autoPlay = setInterval(() => {
         currentIndex = (currentIndex + 1) % totalSlides;
         updateCarousel();
     }, 5000);
 
-    const container = document.querySelector('.carrossel-container');
     if (container) {
-        container.onmouseenter = () => clearInterval(autoPlay); 
-        container.onmouseleave = () => {
+        container.addEventListener('mouseenter', () => clearInterval(autoPlay)); 
+        container.addEventListener('mouseleave', () => {
             autoPlay = setInterval(() => {
                 currentIndex = (currentIndex + 1) % totalSlides;
                 updateCarousel();
             }, 5000);
-        };
+        });
     }
 }
 
