@@ -1,22 +1,23 @@
+import { mostrarErro } from "./popUpErro.js";
+
 const API_URL = 'http://localhost:3000';
 let produtosGlobais = [];
 let empresasGlobais = [];
 let paginasGlobais = [];
-let adminsGlobais = [];
 
-document.getElementById('exibir_no_carrossel').addEventListener('change', (e) => {
+function alternarSelectCarrosselCadastro(e) {
     const select = document.getElementById('pagina_carrossel_id');
     select.disabled = !e.target.checked;
     select.required = e.target.checked;
     if (!e.target.checked) select.value = ""; 
-});
+}
 
-document.getElementById('edit_exibir_carrossel').addEventListener('change', (e) => {
+function alternarSelectCarrosselEdicao(e) {
     const select = document.getElementById('edit_pagina_id');
     select.disabled = !e.target.checked;
     select.required = e.target.checked;
     if (!e.target.checked) select.value = ""; 
-});
+}
 
 async function carregarDependencias() {
     try {
@@ -24,6 +25,19 @@ async function carregarDependencias() {
             fetch(`${API_URL}/empresas`),
             fetch(`${API_URL}/paginas`)
         ]);
+
+        if (!resEmpresas.ok) {
+            const err = await resEmpresas.json().catch(() => ({}));
+            mostrarErro(resEmpresas.status, err.message || 'Erro ao carregar empresas.');
+            return;
+        }
+
+        if (!resPaginas.ok) {
+            const err = await resPaginas.json().catch(() => ({}));
+            mostrarErro(resPaginas.status, err.message || 'Erro ao carregar páginas.');
+            return;
+        }
+
         empresasGlobais = await resEmpresas.json();
         paginasGlobais = await resPaginas.json();
 
@@ -41,6 +55,7 @@ async function carregarDependencias() {
         preencherSelect('edit_pagina_id', paginasGlobais, 'id', 'nome_pagina', 'Selecione a página...');
     } catch (error) {
         console.error("Erro ao carregar selects:", error);
+        mostrarErro(500, 'Falha de conexão ao carregar empresas e páginas.');
     }
 }
 
@@ -53,13 +68,32 @@ function getClassPorEmpresa(nome) {
     return 'default';
 }
 
+function carregarNomeUsuario() {
+    const dadosUsuario = localStorage.getItem("wade_admin");
+    if (dadosUsuario) {
+        const usuario = JSON.parse(dadosUsuario);
+        const nomeID = document.getElementById('nome-usuario');
+        if (nomeID) {
+            nomeID.innerHTML += usuario.nome;
+        }
+    }
+}
+
 async function carregarProdutos() {
     const container = document.getElementById('listaProdutos');
     try {
         const response = await fetch(`${API_URL}/produtos`);
-        produtosGlobais = await response.json();
+        
+        if (!response.ok) {
+            const err = await response.json().catch(() => ({}));
+            mostrarErro(response.status, err.message || 'Erro ao carregar produtos.');
+            container.innerHTML = '<p class="loading" style="color: red;">Erro ao carregar produtos.</p>';
+            return;
+        }
 
+        produtosGlobais = await response.json();
         container.innerHTML = '';
+
         if (produtosGlobais.length === 0) {
             container.innerHTML = '<p class="loading">Nenhum produto cadastrado.</p>';
             return;
@@ -68,7 +102,7 @@ async function carregarProdutos() {
         produtosGlobais.forEach(produto => {
             const tagClass = getClassPorEmpresa(produto.nome_empresa);
             let carrosselHtml = produto.exibir_no_carrossel && produto.nome_pagina_carrossel 
-                ? `<span class="carousel-badge">🔄 Carrossel: ${produto.nome_pagina_carrossel}</span>` : '';
+                ? `<span class="carousel-badge"> Carrossel: ${produto.nome_pagina_carrossel}</span>` : '';
 
             container.innerHTML += `
                 <div class="product-card">
@@ -87,15 +121,13 @@ async function carregarProdutos() {
             `;
         });
     } catch (error) {
+        console.error(error);
         container.innerHTML = '<p class="loading" style="color: red;">Erro ao carregar produtos.</p>';
+        mostrarErro(500, 'Servidor indisponível ao buscar produtos.');
     }
 }
 
-function atualizarProdutos() {
-    carregarProdutos();
-}
-
-document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+async function cadastrarNovoProduto(e) {
     e.preventDefault();
     const btnSubmit = document.getElementById('btnSubmit');
     const statusMsg = document.getElementById('statusMsg');
@@ -116,53 +148,34 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
             body: formData 
         });
         
-        if (response.ok) {
-            statusMsg.textContent = 'Produto salvo!'; statusMsg.style.color = 'green';
-            e.target.reset();
-            
-            const spanNome = document.getElementById('nome-arquivo');
-            spanNome.textContent = 'Clique para enviar a imagem';
-            spanNome.style.color = '#6B7280';
-            spanNome.style.fontWeight = '500';
-
-            document.getElementById('pagina_carrossel_id').disabled = true;
-            carregarProdutos();
-        } else {
-            const error = await response.json();
-            statusMsg.textContent = 'Erro: ' + error.error; statusMsg.style.color = 'red';
+        if(!response.ok){
+            const errorData = await response.json().catch(() => ({}));
+            mostrarErro(response.status, errorData.message || errorData.error || 'Erro ao salvar o produto.');
         }
-    } catch (error) {
-        statusMsg.textContent = 'Erro de conexão.'; statusMsg.style.color = 'red';
-    } finally {
-        btnSubmit.disabled = false; btnSubmit.textContent = 'Salvar Produto';
-        setTimeout(() => statusMsg.textContent = '', 3000);
-    }
-});
 
-async function excluirProduto(id) {
-    if (!confirm('Tem a certeza que deseja excluir este produto?')) return;
-    
-    const token = localStorage.getItem('wade_token');
-
-    try {
-        const response = await fetch(`${API_URL}/produtos/${id}`, { 
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+        statusMsg.textContent = 'Produto salvo!'; 
+        statusMsg.style.color = 'green';
+        e.target.reset();
         
-        if (response.ok) {
-            carregarProdutos();
-        } else {
-            alert('Erro ao excluir o produto. Acesso negado ou token inválido.');
-        }
-    } catch (error) { 
-        alert('Erro de conexão ao tentar excluir.'); 
+        const spanNome = document.getElementById('nome-arquivo');
+        spanNome.textContent = 'Clique para enviar a imagem';
+        spanNome.style.color = '#6B7280';
+        spanNome.style.fontWeight = '500';
+
+        document.getElementById('pagina_carrossel_id').disabled = true;
+        carregarProdutos();
+  
+    } catch (error) {
+        console.error(error);
+        mostrarErro(500, 'Não foi possível conectar ao servidor para enviar o produto.');
+    } finally {
+        btnSubmit.disabled = false; 
+        btnSubmit.textContent = 'Salvar Produto';
+        setTimeout(() => statusMsg.textContent = '', 3000);
     }
 }
 
-document.getElementById('formEditar').addEventListener('submit', async (e) => {
+async function salvarEdicaoProduto(e) {
     e.preventDefault();
     const id = document.getElementById('edit_id').value;
     const dadosAtualizados = {
@@ -184,56 +197,50 @@ document.getElementById('formEditar').addEventListener('submit', async (e) => {
             },
             body: JSON.stringify(dadosAtualizados)
         });
-
-        if (response.ok) {
-            fecharModal();
-            carregarProdutos();
-        } else {
-            alert('Erro ao atualizar o produto. Acesso negado ou token inválido.');
+        
+        if(!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            mostrarErro(response.status, errorData.message || errorData.error || 'Acesso negado ou erro ao atualizar o produto.');
         }
+
+        fecharModal();
+        carregarProdutos();
+
     } catch (error) {
-        alert('Erro de conexão ao tentar atualizar.');
+        console.error(error);
+        mostrarErro(500, 'Erro de conexão ao tentar atualizar o produto.');
     }
-});
+}
 
-document.getElementById('form_cadastrar_admin').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const nome = document.getElementById('admin_nome').value;
-    const email = document.getElementById('admin_email').value;
-    const senha = document.getElementById('admin_senha').value;
-
+async function excluirProduto(id) {
+    if (!confirm('Tem a certeza que deseja excluir este produto?')) return;
+    
     const token = localStorage.getItem('wade_token');
 
-    if (!token) {
-        alert("Você precisa estar logado para cadastrar um administrador.");
-        return;
-    }
-
-    try{
-        const response = await fetch('http://localhost:3000/api/cadastrar', {
-            method: 'POST',
+    try {
+        const response = await fetch(`${API_URL}/produtos/${id}`, { 
+            method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ nome, email, senha })
+            }
         });
-
-        const data = await response.json()
-
-        if(response.ok){
-            alert("Administrador cadastrado com sucesso!");
-            document.getElementById('form_cadastrar_admin').reset();
-
-        } else{
-            alert('Erro:' + data.message);
+        
+        if(!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            mostrarErro(response.status, errorData.message || errorData.error || 'Acesso negado ou erro ao excluir o produto.');
         }
-    } catch(error){
-        console.error('Error:' + error);
-        alert("Não foi possível conectar ao servidor.");
+
+        carregarProdutos();
+
+    } catch (error) { 
+        console.error(error);
+        mostrarErro(500, 'Erro de conexão ao tentar excluir o produto.');
     }
-})
+}
+
+function atualizarProdutos() {
+    carregarProdutos();
+}
 
 async function getAdmins() {
     try {
@@ -242,76 +249,121 @@ async function getAdmins() {
                 'Authorization': `Bearer ${localStorage.getItem('wade_token')}`
             }
         });
-        const data = await response.json();
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+            mostrarErro(response.status, data.message || data.error || 'Erro ao carregar administradores.');
+            document.getElementById('listaAdmins').innerHTML = '<p>Erro ao carregar admins.</p>';
+            return;
+        }
 
         const container = document.getElementById('listaAdmins');
         container.innerHTML = '';
         
-       data.forEach((admin, index) => {
-        container.innerHTML += `
-            <div class="admin-content">
-                <p class="col-posicao">${index + 1}</p>
-                <input type="text" class="col-texto edit-input" data-id="${admin.id_admin}" data-field="nome" value="${admin.nome}">
-                <input type="email" class="col-texto edit-input" data-id="${admin.id_admin}" data-field="email" value="${admin.email}">
-                
-                <!-- Grupo de botões de ação -->
-                <div class="col-acao">
-                    <button class="btn-mudar-senha" data-id="${admin.id_admin}" title="Mudar Senha">🔑</button>
-                    <button class="btn-excluir-admin" data-id="${admin.id_admin}" title="Excluir Admin">🗑️</button>
+        data.forEach((admin, index) => {
+            container.innerHTML += `
+                <div class="admin-content">
+                    <p class="col-posicao">${index + 1}</p>
+                    <input type="text" class="col-texto edit-input" data-id="${admin.id_admin}" data-field="nome" value="${admin.nome}">
+                    <input type="email" class="col-texto edit-input" data-id="${admin.id_admin}" data-field="email" value="${admin.email}">
+                    
+                    <div class="col-acao">
+                        <button class="btn-mudar-senha" data-id="${admin.id_admin}" title="Mudar Senha">🔑</button>
+                        <button class="btn-excluir-admin" data-id="${admin.id_admin}" title="Excluir Admin">🗑️</button>
+                    </div>
                 </div>
-            </div>
-        `;
-    });
-    } catch(err) {
+            `;
+        });
+    } catch (err) {
         console.error('Erro ao buscar admins: ', err);
         document.getElementById('listaAdmins').innerHTML = '<p>Erro ao carregar admins.</p>';
+        mostrarErro(500, 'Servidor indisponível ao buscar administradores.');
     }
 }
 
-document.getElementById('listaAdmins').addEventListener('change', async (e) => {
-    if (e.target.classList.contains('edit-input')) {
-        const id = e.target.getAttribute('data-id');
-        const campo = e.target.getAttribute('data-field');
-        const novoValor = e.target.value;
-        const token = localStorage.getItem('wade_token');
+async function cadastrarNovoAdmin(e) {
+    e.preventDefault();
 
-        try {
-            const response = await fetch(`http://localhost:3000/api/atualizarAdmin/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ campo: campo, valor: novoValor })
-            });
+    const nome = document.getElementById('admin_nome').value;
+    const email = document.getElementById('admin_email').value;
+    const senha = document.getElementById('admin_senha').value;
+    const token = localStorage.getItem('wade_token');
 
-            const data = await response.json();
-
-            if (response.ok) {
-                e.target.style.borderColor = '#10b981';
-                setTimeout(() => e.target.style.borderColor = 'transparent', 1500);
-            } else {
-                alert('Erro: ' + data.error);
-                getAdmins();
-            }
-        } catch (error) {
-            console.error('Erro na requisição de atualização:', error);
-            alert('Falha ao conectar com o servidor.');
-        }
+    if (!token) {
+        mostrarErro(401, 'Você precisa estar logado para cadastrar um administrador.');
+        return;
     }
-});
 
-document.getElementById('listaAdmins').addEventListener('click', async (e) => {
+    try {
+        const response = await fetch(`${API_URL}/api/cadastrar`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ nome, email, senha })
+        });
+
+        const data = await response.json().catch(() => ({}));
+        
+            
+        if(!response.ok) mostrarErro(response.status, data.message || data.error || 'Erro ao cadastrar administrador.');
+
+        alert("Administrador cadastrado com sucesso!");
+        document.getElementById('form_cadastrar_admin').reset();
+        getAdmins();
+
+    } catch (error) {
+        console.error('Error:', error);
+        mostrarErro(500, 'Não foi possível conectar ao servidor.');
+    }
+}
+
+async function editarCampoAdmin(e) {
+    if (!e.target.classList.contains('edit-input')) return;
+
+    const id = e.target.getAttribute('data-id');
+    const campo = e.target.getAttribute('data-field');
+    const novoValor = e.target.value;
+    const token = localStorage.getItem('wade_token');
+
+    try {
+        const response = await fetch(`${API_URL}/api/atualizarAdmin/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ campo: campo, valor: novoValor })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if(!response.ok){
+            mostrarErro(response.status, data.message || data.error || 'Erro ao atualizar dados do administrador.');
+            getAdmins();
+        }
+
+        e.target.style.borderColor = '#10b981';
+        setTimeout(() => e.target.style.borderColor = 'transparent', 1500);
+
+    } catch (error) {
+        console.error('Erro na requisição de atualização:', error);
+        mostrarErro(500, 'Falha ao conectar com o servidor.');
+    }
+}
+
+async function gerenciarAcoesListaAdmin(e) {
+    // Ação: Mudar Senha
     if (e.target.classList.contains('btn-mudar-senha')) {
         const id = e.target.getAttribute('data-id');
-        
         const novaSenha = prompt('Digite a nova senha para este administrador:');
         
         if (novaSenha) {
             const token = localStorage.getItem('wade_token');
-
             try {
-                const response = await fetch(`http://localhost:3000/api/atualizarSenhaAdmin/${id}`, {
+                const response = await fetch(`${API_URL}/api/atualizarSenhaAdmin/${id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -320,51 +372,50 @@ document.getElementById('listaAdmins').addEventListener('click', async (e) => {
                     body: JSON.stringify({ novaSenha: novaSenha })
                 });
 
-                const data = await response.json();
+                const data = await response.json().catch(() => ({}));
 
                 if (response.ok) {
                     alert('Senha atualizada com sucesso!');
                 } else {
-                    alert('Erro: ' + data.error);
+                    mostrarErro(response.status, data.message || data.error || 'Erro ao atualizar a senha.');
                 }
             } catch (error) {
                 console.error('Erro ao mudar senha:', error);
-                alert('Falha ao conectar com o servidor.');
+                mostrarErro(500, 'Falha ao conectar com o servidor.');
             }
         }
     }
 
+    // Ação: Excluir Admin
     if (e.target.classList.contains('btn-excluir-admin')) {
         const id = e.target.getAttribute('data-id');
-        
         const confirmacao = confirm('Tem certeza que deseja excluir este administrador? Esta ação não pode ser desfeita.');
         
         if (confirmacao) {
             const token = localStorage.getItem('wade_token');
-
             try {
-                const response = await fetch(`http://localhost:3000/api/excluirAdmin/${id}`, {
+                const response = await fetch(`${API_URL}/api/excluirAdmin/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
 
-                const data = await response.json();
+                const data = await response.json().catch(() => ({}));
 
                 if (response.ok) {
                     e.target.closest('.admin-content').remove(); 
                     getAdmins();
                 } else {
-                    alert('Erro: ' + data.error);
+                    mostrarErro(response.status, data.message || data.error || 'Erro ao excluir administrador.');
                 }
             } catch (error) {
                 console.error('Erro ao excluir admin:', error);
-                alert('Falha ao conectar com o servidor.');
+                mostrarErro(500, 'Falha ao conectar com o servidor.');
             }
         }
     }
-});
+}
 
 function atualizarAdmins() {
     getAdmins();
@@ -398,7 +449,6 @@ function mostrarNomeArquivo(input) {
     
     if (input.files && input.files.length > 0) {
         spanNome.textContent = input.files[0].name;
-        
         spanNome.style.color = '#6366F1';
         spanNome.style.fontWeight = 'bold';
     } else {
@@ -410,13 +460,12 @@ function mostrarNomeArquivo(input) {
 
 function toggleSidebar() {
     const sidebar = document.querySelector('.sidebar');
-    
     let overlay = document.querySelector('.menu-overlay');
+    
     if (!overlay) {
         overlay = document.createElement('div');
         overlay.className = 'menu-overlay';
         document.body.appendChild(overlay);
-        
         overlay.addEventListener('click', toggleSidebar);
     }
 
@@ -427,49 +476,44 @@ function toggleSidebar() {
 function mostrarPainel(painel) {
     document.getElementById('panel-add').style.display = painel === 'add' ? 'block' : 'none';
     document.getElementById('panel-list').style.display = painel === 'list' ? 'block' : 'none';
-    document.getElementById('painel-admin').style.display = painel === 'add' || painel === 'list' ? 'block' : 'none';
+    document.getElementById('painel-admin').style.display = painel === 'admin' ? 'block' : 'none';
 
     const botoes = document.querySelectorAll('.menu-btn');
-    botoes[0].classList.toggle('active', painel === 'add');
-    botoes[1].classList.toggle('active', painel === 'list');
+    if (botoes[0]) botoes[0].classList.toggle('active', painel === 'add');
+    if (botoes[1]) botoes[1].classList.toggle('active', painel === 'list');
+    if (botoes[2]) botoes[2].classList.toggle('active', painel === 'admin');
 
     if (window.innerWidth <= 768) {
         const sidebar = document.querySelector('.sidebar');
         const overlay = document.querySelector('.menu-overlay');
-        if (sidebar.classList.contains('open')) {
+        if (sidebar && sidebar.classList.contains('open')) {
             sidebar.classList.remove('open');
-            if(overlay) overlay.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
         }
     }
 }
 
-function mostrarPainel(painel) {
-    document.getElementById('panel-add').style.display = painel === 'add' ? 'block' : 'none';
-    document.getElementById('panel-list').style.display = painel === 'list' ? 'block' : 'none';
-    document.getElementById('painel-admin').style.display = painel === 'admin' ? 'block' : 'none';
+// Registro dos listeners
+document.getElementById('exibir_no_carrossel').addEventListener('change', alternarSelectCarrosselCadastro);
+document.getElementById('edit_exibir_carrossel').addEventListener('change', alternarSelectCarrosselEdicao);
+document.getElementById('uploadForm').addEventListener('submit', cadastrarNovoProduto);
+document.getElementById('formEditar').addEventListener('submit', salvarEdicaoProduto);
+document.getElementById('form_cadastrar_admin').addEventListener('submit', cadastrarNovoAdmin);
+document.getElementById('listaAdmins').addEventListener('change', editarCampoAdmin);
+document.getElementById('listaAdmins').addEventListener('click', gerenciarAcoesListaAdmin);
 
-    const botoes = document.querySelectorAll('.menu-btn');
-    botoes[0].classList.toggle('active', painel === 'add');
-    botoes[1].classList.toggle('active', painel === 'list');
-    botoes[2].classList.toggle('active', painel === 'admin');
-}
+// Inicializacao
+window.abrirModalEditar = abrirModalEditar;
+window.fecharModal = fecharModal;
+window.excluirProduto = excluirProduto;
+window.atualizarProdutos = atualizarProdutos;
+window.atualizarAdmins = atualizarAdmins;
+window.mostrarNomeArquivo = mostrarNomeArquivo;
+window.toggleSidebar = toggleSidebar;
+window.mostrarPainel = mostrarPainel;
 
-function carregarNome() {
-    const dadosUsuario = localStorage.getItem("wade_admin");
-
-    if (dadosUsuario) {
-        const usuario = JSON.parse(dadosUsuario);
-
-        const nomeID = document.getElementById('nome-usuario');
-
-        if (nomeID) {
-            nomeID.innerHTML += usuario.nome;
-        }
-    }
-
-}
-
+// Inicialização da página
 carregarDependencias();
 carregarProdutos();
-carregarNome();
+carregarNomeUsuario();
 getAdmins();

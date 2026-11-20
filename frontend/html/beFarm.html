@@ -7,6 +7,7 @@
     <title>Empresa Wade - BeFarm</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/beFarm.css">
+    <link rel="stylesheet" href="../css/carrossel.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -14,7 +15,7 @@
 <body>
 
     <header class="header">
-        <a href="#" class="logo-link">
+        <a href="../../index.html" class="logo-link">
             <img src="../img/beFarm.png" alt="BeFarm Logo" id="imgH">
         </a>
 
@@ -27,14 +28,13 @@
         <nav id="direitoH">
             <ul class="nav-links">
                 <li><a href="../../index.html">Início</a></li>
-                <li><a href="#">WadeBrasil</a></li>
-                <li><a href="#">BlueSafe</a></li>
-                <li><a href="#" id="beFarm">BeFarm</a></li>
-                <li><a href="../html/catalogo.html">Catálogo</a></li>
+                <li><a href="blueSafe.html">BlueSafe</a></li>
+                <li><a href="#">BeFarm</a></li>
+                <li><a href="catalogo.html">Catálogo</a></li>
             </ul>
 
             <div class="header-buttons">
-                <a href="#" class="btn-header" id="botaoAPP">
+                <a href="https://play.google.com/store/apps/details?id=com.wadebrasil.  wade_mobile_android&hl=pt_BR" target="_blank" class="btn-header" id="botaoAPP">
                     <img src="../img/logoAPP.png" alt="App Icon">
                     <span>APP</span>
                 </a>
@@ -57,7 +57,7 @@
         <h5 class="h5Main">PROPÓSITO BEFARM</h5>
         <h1 class="h1Main">Destaques da BeFarm</h1>
         
-        <section class="carrossel-container">
+        <section class="carrossel-container beFarmCarrossel">
             <div class="carrossel-track" id="track"></div>
 
             <button class="carrossel-btn prev-btn" id="prevBtn">&#10094;</button>
@@ -173,7 +173,50 @@
                 </a>
             </p>
         </div>
+
+        
     </footer>
+
+    <script>
+        async function getProdutosBeFarm() {
+            try {
+                const response = await fetch('http://localhost:3000/getProdutosBeFarm');
+
+                if (!response.ok) {
+                    console.error('Erro ao buscar produtos:', response.statusText);
+                    return;
+                }
+
+                const divDesejada = document.getElementById('track');
+                
+                if (!divDesejada) {
+                    console.error('Elemento track não encontrado.');
+                    return;
+                }
+
+                const produtos = await response.json();
+                
+                divDesejada.innerHTML = '';
+
+                produtos.forEach(produto => {
+                    divDesejada.innerHTML += `
+                        <div class="carrossel-slide"> 
+                            <img class="produto-imagem" src="${produto.link_visualizacao}" alt="${produto.titulo}">
+                            <div class="produto-info">
+                                <h2 class="produto-titulo">${produto.titulo}</h2>
+                                <p class="produto-descricao">${produto.descricao}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                iniciarCarrossel();
+
+            } catch(err) {
+                console.error('Erro ao buscar produtos:', err);
+            }
+        }
+    </script>
 
     <script src="../js/carrossel.js"></script>
     <script src="../js/header.js"></script>

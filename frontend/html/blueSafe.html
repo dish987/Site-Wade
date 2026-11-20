@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BlueSafe - lava-roupas enzimático Wade.">
+  <meta name="theme-color" content="#f0eafa">
+  <link rel="icon" href="../img/iconSite.png">
+  <title>Empresa Wade - Blue Safe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/blueSafe.css">
+  <link rel="stylesheet" href="../css/carrossel.css">
+</head>
+<body>
+  <div class="video-background" aria-hidden="true"><video id="video-fundo" autoplay muted loop playsinline preload="auto"><source src="../img/imgBlueSafe/background-video.mp4" type="video/mp4"></video></div>
+  <header class="header" id="topo">
+    <a href="../../index.html" class="logo-link" aria-label="Wade - início">
+      <img src="../img/blueSafe.png" alt="Logo Wade" id="imgH" style="width: 60%;">
+    </a>
+
+    <button class="mobile-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <nav id="direitoH" aria-label="Navegação principal">
+      <ul class="nav-links">
+        <li><a href="../../index.html">Início</a></li>
+        <li><a href="#">BlueSafe</a></li>
+        <li><a href="beFarm.html">BeFarm</a></li>
+        <li><a href="catalogo.html">Catálogo</a></li>
+      </ul>
+
+      <div class="header-buttons">
+          <a href="https://play.google.com/store/apps/details?id=com.wadebrasil.wade_mobile_android&hl=pt_BR" target="_blank" class="btn-header" id="botaoAPP">
+              <img src="../img/logoAPP.png" alt="App Icon">
+              <span>APP</span>
+          </a>
+          <a href="#" class="btn-header" id="botaoADMIN">
+              <img src="../img/configAdmin.png" alt="Admin Icon">
+              <span>DASHBOARD</span>
+          </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <img class="hero-tecidos" src="../img/imgBlueSafe/tecidos.png" alt="Pilha de roupas e tecidos coloridos">
+      <div class="hero-selo"><span>WADE</span><i></i><span>BLUE SAFE</span></div>
+    </section>
+
+    
+
+    <section class="conteudo" id="objetivo">
+      <div class="container">
+        <div class="secao-intro">
+          <div>
+            <p class="eyebrow">Cuidado inteligente</p>
+            <h1>Limpeza eficiente.<br><span>Cuidado em cada fibra.</span></h1>
+          </div>
+          <p class="intro-resumo">Tecnologia enzimática para uma lavagem mais completa, com eficiência e cuidado para suas roupas.</p>
+        </div>
+
+        <div class="objetivo-grid">
+          <div class="objetivo-principal">
+            <span class="numero-secao">NOSSO OBJETIVO</span>
+            <h2>Uma nova forma de cuidar das suas roupas.</h2>
+            <p>Os lava-roupas enzimáticos Wade foram desenvolvidos para proporcionar uma limpeza eficiente, ajudando a remover sujeiras e manchas do dia a dia. Sua fórmula com enzimas potencializa a ação de limpeza, deixando as roupas limpas e bem cuidadas.</p>
+          </div>
+          <div class="objetivo-destaque">
+            <span class="aspas">“</span>
+            <p>Com tecnologia enzimática, os lava-roupas Wade atuam de forma eficiente sobre diferentes tipos de sujeira, proporcionando uma lavagem mais completa. Uma solução prática para quem busca desempenho e cuidado com as roupas.</p>
+            <span class="destaque-linha"></span>
+          </div>
+        </div>
+
+        <section class="produto" id="produto">
+          <div class="produto-imagem">
+            <span class="produto-orbita"></span>
+            <img src="../img/imgBlueSafe/produto.png" alt="Frasco do lava-roupas enzimático BlueSafe">
+          </div>
+          <div class="produto-texto">
+            <span class="numero-secao">CONHEÇA O PRODUTO</span>
+            <p class="eyebrow">Tecnologia e cuidado</p>
+            <h2>LAVA ROUPAS<br><span>ENZIMÁTICO</span></h2>
+            <p>O BlueSafe Lava Roupas Enzimático é um detergente líquido desenvolvido com tecnologia enzimática de alta performance, proporcionando uma limpeza profunda e eficiente para diferentes tipos de tecidos. Sua fórmula avançada atua diretamente na remoção de sujeiras e manchas, preservando as cores e a qualidade das roupas mesmo após diversas lavagens.</p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="carrossel-container blueSafeCarrossel">
+      <div class="carrossel-track" id="track"></div>
+
+      <button class="carrossel-btn prev-btn" id="prevBtn">&#10094;</button>
+      <button class="carrossel-btn next-btn" id="nextBtn">&#10095;</button>
+
+      <div class="carrossel-indicador" id="indicador"></div>
+    </section>
+    <br><br>
+      <section class="btn">
+          <a href="catalogo.html" id="buttonConhecer">Conhecer o Catálogo Completo -> </a>
+      </section>
+  </main>
+
+  <footer>
+        <div class="infoFooter">
+            <section class="imgEmpresas">
+                <img src="../img/beFarm.png" alt="BeFarm">
+                <img src="../img/wadeBrasil.png" alt="Wade Brasil">
+                <img src="../img/blueSafe.png" alt="Blue Safe">
+            </section>
+
+            <section class="caixasP mapaSite">
+                <h6 class="h6C">Mapa do Site</h6>
+                <a href="#">Início</a>
+                <a href="#">Quem Somos?</a>
+                <a href="#">Catálogo</a>
+            </section>
+
+            <section class="caixasP suporte">
+                <h6 class="h6C">Suporte</h6>
+                <a href="#">FAQ</a>
+            </section>
+
+            <section class="caixasP empresas">
+                <h6 class="h6C">Empresas</h6>
+                <a href="#">Wade Brasil</a>
+                <a href="#">BlueSafe</a>
+                <a href="#">BeFarm</a>
+            </section>
+
+            <section class="redesSociais">
+                <div class="sitesLogo">
+                    <a href="#"><img src="../img/instagram.png" alt="Instagram"></a>
+                    <a href="#"><img src="../img/facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="../img/twitter.png" alt="Twitter"></a>
+                </div>
+                <img src="../img/qrCode.png" alt="">
+            </section>
+        </div>
+
+        <div class="direitosFooter">
+            <p>
+                <a href="../html/login.html" class="copyright-link" title="Acessar Área de Login">
+                © 2026 Sua Empresa. Todos os direitos reservados.
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+      async function getProdutosBeFarm() {
+        try {
+            const response = await fetch('http://localhost:3000/getProdutosBlueSafe');
+
+            if (!response.ok) {
+                console.error('Erro ao buscar produtos:', response.statusText);
+                return;
+            }
+
+            const divDesejada = document.getElementById('track');
+            
+            if (!divDesejada) {
+                console.error('Elemento track não encontrado.');
+                return;
+            }
+
+            const produtos = await response.json();
+            
+            divDesejada.innerHTML = '';
+
+            produtos.forEach(produto => {
+                divDesejada.innerHTML += `
+                    <div class="carrossel-slide"> 
+                        <img class="produto-imagem" src="${produto.link_visualizacao}" alt="${produto.titulo}">
+                        <div class="produto-info">
+                            <h2 class="produto-titulo">${produto.titulo}</h2>
+                            <p class="produto-descricao">${produto.descricao}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            iniciarCarrossel();
+
+        } catch(err) {
+            console.error('Erro ao buscar produtos:', err);
+        }
+    }
+    </script>
+
+    <script src="../js/blueSafe.js" defer></script>
+    <script src="../js/autenticacao.js"></script>
+    <script src="../js/header.js"></script>
+    <script src="../js/carrossel.js"></script>
+</body>
+</html>

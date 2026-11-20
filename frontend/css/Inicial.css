@@ -926,9 +926,11 @@ html {
 }
 
 .qr-code {
-  display: block;
+  display: flex;
+  justify-content: center;
   box-sizing: border-box;
-  width: 100%;
+  transform: translateX(5%);
+  width: 90%;
   height: 100%;
   padding: 1.2cqw;
   object-fit: contain;

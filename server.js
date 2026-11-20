@@ -356,9 +356,24 @@ app.delete('/produtos/:id', verificarJWT, async (req, res) => {
 });
 
 
-app.get('/getProdutosBeFarm', async (req, res) => {
+app.get('/getProdutosBeFarm', async (_, res) => {
   try{
     const query = await db.query('SELECT titulo, descricao, link_visualizacao FROM produtos WHERE exibir_no_carrossel = true AND pagina_carrossel_id = 2');
+
+    if(query.rows.length === 0) {
+      return res.status(400).json({error: 'Não possui nenhum produto permitido para aparecer no carrossel!'});
+    }
+
+    res.json(query.rows ,{success: true, message: 'Produto(s) encontrado(s)'});
+  } catch(err){
+    console.error('Erro', err);
+    res.status(500).json({error: 'Erro interno ao carregr os produtos!', err})
+  }
+}) 
+
+app.get('/getProdutosBlueSafe', async (_, res) => {
+  try{
+    const query = await db.query('SELECT titulo, descricao, link_visualizacao FROM produtos WHERE exibir_no_carrossel = true AND pagina_carrossel_id = 3');
 
     if(query.rows.length === 0) {
       return res.status(400).json({error: 'Não possui nenhum produto permitido para aparecer no carrossel!'});

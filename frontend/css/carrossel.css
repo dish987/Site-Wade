@@ -1,0 +1,283 @@
+.carrossel-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 40px 0;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
+    font-family: var(--font-main, system-ui, sans-serif);
+    border-radius: 0;
+}
+
+.beFarmCarrossel { 
+    background: linear-gradient(135deg, #A2C279 0%, #6D8F46 100%); 
+}
+
+.blueSafeCarrossel { 
+    background: linear-gradient(135deg, #7ABFBC 0%, #488E8B 100%); 
+}
+
+.carrossel-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.06) 2px, transparent 2px);
+    background-size: 32px 32px;
+    pointer-events: none;
+}
+
+.carrossel-track {
+    display: flex;
+    width: 100%;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.3, 1);
+    align-items: stretch;
+}
+
+.carrossel-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: clamp(4rem, 8vw, 6rem) clamp(2rem, 5vw, 4rem);
+    gap: clamp(2rem, 6vw, 5rem);
+}
+
+.produto-imagem {
+    flex: 1;
+    max-width: 420px;
+    width: 100%;
+    height: clamp(250px, 35vw, 420px);
+    object-fit: contain;
+    filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.35));
+    animation: flutuar 5s ease-in-out infinite;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+.carrossel-slide:hover .produto-imagem {
+    transform: scale(1.05);
+}
+
+.produto-info {
+    flex: 1;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+    text-align: left;
+}
+
+.produto-titulo {
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    color: #ffffff;
+    margin-bottom: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.produto-descricao {
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+.produto-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #FF8C00 0%, #E65100 100%);
+    color: #ffffff;
+    padding: 14px 32px;
+    border-radius: 99px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    width: max-content;
+    box-shadow: 0 8px 24px rgba(230, 81, 0, 0.35);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+.produto-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(230, 81, 0, 0.5);
+}
+
+.carrossel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    color: #ffffff;
+    z-index: 10;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.carrossel-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev-btn { left: clamp(10px, 3vw, 40px); }
+.next-btn { right: clamp(10px, 3vw, 40px); }
+
+.carrossel-indicador {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.indicador {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.3, 1);
+    border: none;
+    padding: 0;
+}
+
+.indicador:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.indicador.active {
+    background-color: #ffffff;
+    width: 32px; 
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.btn{
+    display: flex;
+    justify-content: center;
+}
+
+#buttonConhecer{
+    background-color: #F57C00;
+    text-decoration: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    text-align: center;
+    transition: .5s;
+}
+
+#buttonConhecer:hover{
+    transform: scale(1.04);
+}
+
+@media (max-width: 992px) {
+    .carrossel-slide { 
+        padding: 60px 50px; 
+        gap: 25px; 
+    }
+    .produto-imagem { 
+        max-width: 320px; 
+        height: 300px; 
+    }
+    .produto-titulo { 
+        font-size: 1.8rem; 
+    }
+    .produto-descricao { 
+        font-size: 0.95rem; 
+    }
+}
+
+@media (max-width: 870px) {
+    .carrossel-slide { 
+        flex-direction: column; 
+        padding: 40px 20px 50px 20px; 
+        text-align: center; 
+    }
+    .produto-imagem { 
+        max-width: 260px; 
+        height: 200px; 
+        margin-right: 0; 
+        margin-bottom: 1rem;
+    }
+    .produto-info { 
+        align-items: center; 
+        text-align: center; 
+    }
+    .produto-titulo { 
+        font-size: 1.5rem; 
+        margin-bottom: 10px; 
+    }
+    .produto-descricao { 
+        font-size: 0.9rem; 
+        margin-bottom: 15px; 
+    }
+    .carrossel-btn { 
+        width: 44px; height: 44px; 
+        font-size: 16px; 
+        background: rgba(255, 255, 255, 0.15);
+    }
+    .prev-btn { left: 10px; }
+    .next-btn { right: 10px; }
+}
+
+@media (max-width: 480px) {
+    .carrossel-container {
+        margin-bottom: 20px;
+    }
+    .carrossel-slide { 
+        padding: 30px 15px 50px 15px; 
+    }
+    .produto-imagem { 
+        max-width: 200px; 
+        height: 150px; 
+    }
+    .produto-titulo { 
+        font-size: 1.25rem; 
+        margin-bottom: 8px; 
+    }
+    .produto-descricao { 
+        font-size: 0.85rem; 
+        margin-bottom: 20px; 
+        display: -webkit-box; 
+        -webkit-box-orient: vertical; 
+        overflow: hidden; 
+    }
+    .carrossel-btn { 
+        display: none; 
+    }
+    .carrossel-indicador {
+        bottom: 20px;
+    }
+    .indicador { 
+        width: 8px; 
+        height: 8px; 
+    }
+}
+
+
+@keyframes flutuar {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-18px); }
+    100% { transform: translateY(0px); }
+}
